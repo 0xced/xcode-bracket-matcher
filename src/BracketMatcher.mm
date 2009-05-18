@@ -43,8 +43,11 @@ static BracketMatcher* SharedInstance;
 @implementation BracketMatcher
 + (void)load
 {
-	if([NSClassFromString(@"XCSourceCodeTextView") jr_swizzleMethod:@selector(keyDown:) withMethod:@selector(BracketMatching_keyDown:) error:NULL])
-		NSLog(@"BracketMatcher loaded");
+	if ([[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.Xcode"])
+	{
+		if([NSClassFromString(@"XCSourceCodeTextView") jr_swizzleMethod:@selector(keyDown:) withMethod:@selector(BracketMatching_keyDown:) error:NULL])
+			NSLog(@"BracketMatcher loaded");
+	}
 }
 
 + (BracketMatcher*)sharedInstance
